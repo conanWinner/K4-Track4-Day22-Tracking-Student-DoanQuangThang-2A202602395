@@ -12,6 +12,7 @@ ffprobe và khớp 600 / 1.050 / 837 / 900 / 750 ảnh gốc.
 - [Gói nộp: năm file MOT, báo cáo và bằng chứng](submission/Day22_DoanQuangThang_2A202602395.zip).
 - [Báo cáo hoàn chỉnh](submission_template/BAO_CAO_mau.md),
   [thử nghiệm và lý do chọn cấu hình](kaggle/THU_NGHIEM.md).
+- [Đối chiếu yêu cầu lần cuối và chấm lại độc lập từ ZIP](kaggle/KIEM_TRA_CUOI.md).
 - [Notebook Kaggle](https://www.kaggle.com/code/thngonquang/track4-day22-tracking)
   (riêng tư, phiên bản 2 là bản đầy đủ).
 
