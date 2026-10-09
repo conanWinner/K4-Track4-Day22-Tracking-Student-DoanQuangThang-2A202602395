@@ -2,6 +2,23 @@
 
 Nhóm 2 người một máy. Detector đã khóa. Bạn chọn tracker và ngưỡng cho năm video khác cảnh.
 
+## Bài làm cá nhân đã hoàn thành
+
+Đoàn Quang Thắng — MSSV 2A202602395. Đã chạy 50 lượt thử và bản cuối
+đủ 4.137 frame trên Kaggle Tesla T4; cả hai notebook đều COMPLETE.
+31 kiểm thử đạt ở máy cục bộ và Kaggle. Năm preview được đếm frame bằng
+ffprobe và khớp 600 / 1.050 / 837 / 900 / 750 ảnh gốc.
+
+- [Gói nộp: năm file MOT, báo cáo và bằng chứng](submission/Day22_DoanQuangThang_2A202602395.zip).
+- [Báo cáo hoàn chỉnh](submission_template/BAO_CAO_mau.md),
+  [thử nghiệm và lý do chọn cấu hình](kaggle/THU_NGHIEM.md).
+- [Notebook Kaggle](https://www.kaggle.com/code/thngonquang/track4-day22-tracking)
+  (riêng tư, phiên bản 2 là bản đầy đủ).
+
+Video_1: HOTA **29,460**, MOTA **19,811**, IDF1 **29,354** theo thang
+phần trăm. Báo cáo ghi rõ các lỗi bỏ sót và đổi ID còn tồn tại;
+video_2–video_5 chỉ đánh giá bằng mắt.
+
 ## Việc cần làm
 
 1. Tạo môi trường một lần:

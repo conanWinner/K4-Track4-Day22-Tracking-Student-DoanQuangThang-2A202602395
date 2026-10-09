@@ -1,57 +1,59 @@
 # Tiến độ bài lab Day22
 
-Kiểm tra ngày 09/10/2026. Dataset riêng tư đã sẵn sàng; notebook chạy thử COMPLETE.
+Kiểm tra ngày 09/10/2026: **SẴN SÀNG NỘP**. Làm cá nhân:
+Đoàn Quang Thắng — MSSV 2A202602395.
 
-## Đã hoàn thành
+## Kết quả đã xác minh
 
-- Điền ba câu hỏi ôn metric: True, False, True.
-- Sửa thiết bị Re-ID thành torch.device và chạy detector trên thiết bị được chọn.
-- Từ chối ảnh không đọc được để không bỏ frame âm thầm.
-- Chuyển bản vá NumPy vào tiến trình TrackEval; stage theo split trong cấu hình.
-- Tạo notebook Kaggle riêng tư, công cụ chuẩn bị dataset và pipeline thử/final.
-- 31 unit test cục bộ passed; git diff --check passed.
-- ZIP 678.839.577 byte, CRC hợp lệ, SHA-256:
+- Dataset riêng tư đã ready, đủ 41 phần và manifest (42 tệp).
+- ZIP gốc 678.839.577 byte, CRC hợp lệ; ghép lại trên Kaggle khớp SHA-256
   f7c727c5a7fdec471c6f9496b6ef384324148ccd7465c716505aa6ce1deff7f6.
-- Đủ 4.137 ảnh: video_1=600, video_2=1050, video_3=837, video_4=900, video_5=750.
-- Chia 41 phần nhỏ và ghép kiểm chứng: checksum toàn bộ khớp ZIP gốc.
-- Notebook kiểm thử Kaggle phiên bản 3 COMPLETE trên Tesla T4.
-- YOLO26n và năm tracker chạy thành công với ảnh tổng hợp.
-- Script tracking đã xử lý năm ảnh thử bằng ByteTrack và BoT-SORT.
-- TrackEval đã chấm dữ liệu tổng hợp thành công. Đây không phải điểm bài lab.
+- Đủ 4.137 ảnh: video_1=600, video_2=1050, video_3=837,
+  video_4=900, video_5=750. Chỉ video_1 có nhãn.
+- Preflight phiên bản 3 COMPLETE; detector, năm tracker và TrackEval
+  chạy thành công trên dữ liệu tổng hợp để kiểm tra môi trường.
+- Notebook chính phiên bản 1 COMPLETE: 50 lượt thử, 8.400 frame xử lý;
+  toàn bộ MOT và log đúng số frame. Hai baseline video_1 chấm đủ 600 frame.
+- Notebook chính phiên bản 2 COMPLETE: bản cuối đủ 4.137 frame, Tesla T4.
+- Notebook ôn tập thực thi trên ảnh lab thật; cả ba câu đúng.
+- 31 unit test đạt ở máy cục bộ và Kaggle; git diff --check đạt.
+- Kiểm tra trực quan cùng frame giữa hai tracker, các ngưỡng conf/iou;
+  kiểm tra thêm ba frame giữa/cuối trên mỗi video của bản đầy đủ.
+- Năm preview được ffprobe đếm đúng số ảnh gốc; năm file MOT hợp lệ.
+- Báo cáo điền đủ cấu hình, phương án loại, metric, phân tích và lỗi còn lại.
+- Gói nộp đã tạo bằng script kiểm tra, trạng thái SẴN SÀNG NỘP.
 
-Notebook từ xa: https://www.kaggle.com/code/thngonquang/track4-day22-tracking-preflight
+| Video | Tracker | conf | iou | Frame | Dòng MOT |
+|---|---|---:|---:|---:|---:|
+| video_1 | BoT-SORT | 0,30 | 0,50 | 600 | 4.582 |
+| video_2 | BoT-SORT | 0,15 | 0,50 | 1.050 | 13.821 |
+| video_3 | BoT-SORT | 0,15 | 0,50 | 837 | 5.043 |
+| video_4 | BoT-SORT | 0,30 | 0,50 | 900 | 6.220 |
+| video_5 | ByteTrack | 0,30 | 0,50 | 750 | 2.028 |
 
-Bằng chứng địa phương:
+Video_1 bản cuối: HOTA 29,460; MOTA 19,811; IDF1 29,354 (phần trăm).
+Không có số metric cho video_2–video_5. Gói giảng viên thiếu
+`eval_config.json`; dùng tên chấm chung LAB/train, giữ nguyên nhãn và seqinfo.
 
-- runs/kaggle_preflight_v3/day22/preflight.json
-- runs/kaggle_preflight_v3/day22/trackeval_preflight_passed.txt
-- runs/kaggle_preflight_v3/day22/preflight_trackeval.log
-- runs/kaggle_preflight_v3/day22/versions.txt
-- runs/kaggle_preflight_v3/track4-day22-tracking-preflight.log
+## Đầu ra và bằng chứng
 
-## Đang thực hiện
-
-Người dùng đã tải /home/conanwinner/Downloads/data_lab21.zip. ZIP và các bản
-sao được giữ nguyên. Upload một tệp lớn bị truyền lại từ đầu; tiến trình đó đã
-dừng khi chưa tạo dataset. Đã upload 41 phần và manifest bằng bốn kết nối,
-xác minh đủ 42 tệp và trạng thái dataset ready.
+- Gói nộp: `submission/Day22_DoanQuangThang_2A202602395.zip`.
+- Báo cáo: `submission_template/BAO_CAO_mau.md`.
+- Lựa chọn và thử nghiệm: `kaggle/selections.json`, `kaggle/THU_NGHIEM.md`.
+- Đầu ra thử: `runs/kaggle_trials_v1/day22/`.
+- Đầu ra cuối, notebook ôn tập đã chạy và video: `runs/kaggle_final_v2/day22/`.
+- Bản tải riêng tệp nhẹ: `runs/kaggle_final_v2_text/day22/`.
+- Ảnh kiểm tra trực quan: `runs/inspection/`.
+- ZIP có `KIEM_TRA.json`, log metric, phiên bản thư viện, thông tin GPU,
+  checksum trọng số, cấu hình và commit TrackEval.
 
 Dataset: https://www.kaggle.com/datasets/thngonquang/track4-day22-tracking-lab-data
 
-Notebook chính phiên bản 1 đã COMPLETE, đang tải đầu ra để kiểm tra:
-https://www.kaggle.com/code/thngonquang/track4-day22-tracking
+Notebook chính: https://www.kaggle.com/code/thngonquang/track4-day22-tracking
 
-Gói gốc thiếu eval_config.json; script chấm dùng benchmark LAB, split train,
-giữ nguyên gt.txt và seqinfo.ini. Không dùng nhãn cho bốn video còn lại.
-Đang tải đầu ra lượt thử; chưa xác minh metric thật hoặc bản nộp đủ frame.
+Preflight: https://www.kaggle.com/code/thngonquang/track4-day22-tracking-preflight
 
-## Còn phải làm
-
-1. Tải và kiểm chứng notebook ôn tập cùng 50 lượt thử đã chạy xong.
-2. So sánh hai tracker và các cấu hình conf/iou trên mỗi video bằng preview.
-3. Chọn cấu hình bằng bằng chứng thực tế rồi chạy đủ frame năm video.
-4. Chấm video_1, điền báo cáo từ số liệu và quan sát, đóng gói năm txt + báo cáo.
-
-Báo cáo mẫu chưa điền để tránh đưa nhận xét hoặc số liệu chưa quan sát vào bài.
-Người dùng đã yêu cầu push code lên GitHub trước khi hoàn thiện kết quả.
-Không đưa ảnh lab, trọng số hoặc video preview vào Git; không xóa dữ liệu.
+Code đã push lên GitHub trước theo yêu cầu, commit `c9a867b`.
+Bản hoàn chỉnh gồm báo cáo, lựa chọn và gói nộp được push tiếp sau kiểm tra.
+ZIP tải gốc và mọi bản sao giữ nguyên; không xóa dữ liệu.
+Ảnh lab, trọng số và video preview không được đưa vào Git.
