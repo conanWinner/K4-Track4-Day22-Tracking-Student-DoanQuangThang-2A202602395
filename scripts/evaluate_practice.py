@@ -48,18 +48,17 @@ def _load_eval_config(lab_data_root: Path) -> dict:
         Dict có khóa ``benchmark`` và có thể có ``split``.
 
     Raises:
-        FileNotFoundError: Khi thiếu ``video_1/eval_config.json``.
+        json.JSONDecodeError: Khi file cấu hình hiện có không phải JSON hợp lệ.
     """
     config_path = lab_data_root / PRACTICE_VIDEO / "eval_config.json"
     if not config_path.exists():
-        raise FileNotFoundError(
-            f"Không thấy {config_path}. Dùng đúng gói lab_data giảng viên phát "
-            "(file này đi kèm nhãn của video luyện)."
-        )
+        print("Gói dữ liệu thiếu eval_config.json; dùng benchmark LAB, split train. "
+              "Giữ nguyên gt.txt và seqinfo.ini của giảng viên.")
+        return {"benchmark": "LAB", "split": "train"}
     return json.loads(config_path.read_text())
 
 
-def stage(trackeval_root: Path, lab_data_root: Path, submission: Path, run_name: str, benchmark: str) -> None:
+def stage(trackeval_root: Path, lab_data_root: Path, submission: Path, run_name: str, benchmark: str, split: str = "train") -> None:
     """Copy nhãn video luyện và file nộp vào cây thư mục TrackEval.
 
     Args:
@@ -68,6 +67,7 @@ def stage(trackeval_root: Path, lab_data_root: Path, submission: Path, run_name:
         submission: File ``video_1.txt`` do ``run_tracking.py`` sinh ra.
         run_name: Tên lần chấm, dùng làm thư mục tracker.
         benchmark: Tên benchmark TrackEval, lấy từ ``eval_config.json``.
+        split: Nhánh dữ liệu khai báo trong cấu hình chấm.
 
     Raises:
         FileNotFoundError: Khi thiếu nhãn, ``seqinfo.ini``, hoặc file nộp.
@@ -80,7 +80,7 @@ def stage(trackeval_root: Path, lab_data_root: Path, submission: Path, run_name:
     if not submission.exists():
         raise FileNotFoundError(f"Không thấy file nộp {submission}")
 
-    split_dir = f"{benchmark}-train"
+    split_dir = f"{benchmark}-{split}"
     gt_dst = trackeval_root / "data" / "gt" / "mot_challenge" / split_dir / PRACTICE_VIDEO
     (gt_dst / "gt").mkdir(parents=True, exist_ok=True)
     shutil.copy(gt_file, gt_dst / "gt" / "gt.txt")
@@ -105,6 +105,11 @@ def run_trackeval(trackeval_root: Path, run_name: str, benchmark: str, split: st
     """
     cmd = [
         sys.executable,
+        "-c",
+        "import sys, runpy, numpy as np; "
+        "np.float = float; np.int = int; "
+        "entry = sys.argv.pop(1); sys.argv[0] = entry; "
+        "runpy.run_path(entry, run_name='__main__')",
         str(trackeval_root / "scripts" / "run_mot_challenge.py"),
         "--GT_FOLDER", str(trackeval_root / "data" / "gt" / "mot_challenge"),
         "--TRACKERS_FOLDER", str(trackeval_root / "data" / "trackers" / "mot_challenge"),
@@ -142,7 +147,7 @@ def main() -> None:
     config = _load_eval_config(args.lab_data_root)
     benchmark = config["benchmark"]
     split = config.get("split", "train")
-    stage(args.trackeval_root, args.lab_data_root, args.submission, args.run_name, benchmark)
+    stage(args.trackeval_root, args.lab_data_root, args.submission, args.run_name, benchmark, split)
     run_trackeval(args.trackeval_root, args.run_name, benchmark, split)
     print(
         "\nĐọc bảng phía trên: HOTA cân bằng phát hiện và giữ danh tính; "

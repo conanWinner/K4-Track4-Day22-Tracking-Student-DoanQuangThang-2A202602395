@@ -26,6 +26,7 @@ from typing import Iterator, Tuple
 
 import cv2
 import numpy as np
+import torch
 from ultralytics import YOLO
 
 from boxmot.tracker_zoo import create_tracker, get_tracker_config
@@ -54,13 +55,17 @@ def iter_frames(source: Path) -> Iterator[Tuple[int, np.ndarray]]:
 
     Raises:
         FileNotFoundError: Khi thư mục không có ảnh ``.jpg``, hoặc không mở được file video.
+        ValueError: Khi một ảnh không đọc được, tránh bỏ frame âm thầm.
     """
     if source.is_dir():
         frame_paths = sorted(source.glob("*.jpg"))
         if not frame_paths:
             raise FileNotFoundError(f"Không tìm thấy ảnh .jpg trong {source}")
         for i, path in enumerate(frame_paths):
-            yield i, cv2.imread(str(path))
+            frame = cv2.imread(str(path))
+            if frame is None:
+                raise ValueError(f"Không đọc được ảnh {path}")
+            yield i, frame
     else:
         cap = cv2.VideoCapture(str(source))
         if not cap.isOpened():
@@ -107,6 +112,7 @@ def detect(detector: YOLO, frame: np.ndarray, conf: float, iou: float) -> np.nda
         iou=iou,
         imgsz=IMG_SIZE,
         classes=[PERSON_CLASS_ID],
+        device=next(detector.model.parameters()).device,
         verbose=False,
     )[0]
     if results.boxes is None or len(results.boxes) == 0:
@@ -134,11 +140,12 @@ def run(args: argparse.Namespace) -> None:
     if args.tracker in USES_APPEARANCE:
         print(f"              tracker này dùng Re-ID: {REID_WEIGHTS.name} (tự tải nếu chưa có)")
     detector = YOLO(DETECTOR_WEIGHTS)
+    detector.to(args.device)
     tracker = create_tracker(
         tracker_type=args.tracker,
         tracker_config=get_tracker_config(args.tracker),
         reid_weights=REID_WEIGHTS,
-        device=args.device,
+        device=torch.device(args.device),
         half=False,
         per_class=False,
     )

@@ -1,0 +1,21 @@
+# Phiên bản đã chạy thành công trên GPU Kaggle, Python 3.13.
+# Dùng PyTorch/CUDA có sẵn của Kaggle; ghi phiên bản thực tế vào versions.txt.
+# BoxMOT cài riêng: pip install --no-deps boxmot==10.0.42
+filterpy==1.4.5
+ftfy==6.3.1
+gdown==5.2.2
+GitPython==3.2.0
+lapx==0.10.0
+loguru==0.7.3
+matplotlib==3.10.0
+numpy==2.1.3
+opencv-python==4.14.0.94
+pandas==2.3.3
+pytest==8.4.2
+PyYAML==6.0.3
+regex==2025.11.3
+scikit-learn==1.6.1
+scipy==1.16.3
+tensorboard==2.20.0
+ultralytics==8.4.174
+yacs==0.1.8

@@ -1,6 +1,6 @@
 # Báo cáo lab: chọn tracker cho 5 video
 
-**Nhóm:** ………………………… **Thành viên:** …………………………
+**Nhóm:** Làm cá nhân. **Thành viên:** Đoàn Quang Thắng — MSSV 2A202602395.
 
 Detector cố định: `yolo26n.pt`, ảnh 640 px, Re-ID `osnet_x0_25_msmt17`. Không đổi các mục này trong bài nộp chính.
 

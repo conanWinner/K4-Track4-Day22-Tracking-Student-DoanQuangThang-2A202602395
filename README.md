@@ -60,3 +60,7 @@ python scripts/evaluate_practice.py \
 - `submission_template/BAO_CAO_mau.md` đã điền. Số HOTA / MOTA / IDF1 chỉ bắt buộc cho `video_1`.
 
 Chi tiết từng bước, sự cố, và lịch 2 giờ: [HUONG_DAN.md](HUONG_DAN.md).
+
+Chạy trên GPU Kaggle bằng CLI: [kaggle/README.md](kaggle/README.md).
+Dataset và notebook của bài làm cá nhân dùng chế độ riêng tư;
+tiến độ có bằng chứng được ghi trong [kaggle/TIEN_DO.md](kaggle/TIEN_DO.md).
